@@ -1,26 +1,26 @@
-import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MobileHeaderMenu from "./MobileHeaderMenu";
-import Button from "../common/button/Button";
+import { AuthContext, UserContext } from "../../contexts/Contexts";
 import {
+  BRANDING,
+  BUTTON_TEXT,
+  CROSS,
+  HAMBURGER,
   HEADER_ITEMS,
   LOGGEDIN_ITEMS,
-  HAMBURGER,
-  CROSS,
-  BUTTON_TEXT,
-  BRANDING,
 } from "../../utils/Constants";
-import styles from "./Header.module.css";
 import { handleNavigation } from "../../utils/Helpers";
-import { AuthContext, UserContext } from "../../contexts/Contexts";
+import Button from "../common/button/Button";
+import styles from "./Header.module.css";
+import MobileHeaderMenu from "./MobileHeaderMenu";
 
 const Header = ({ openAuthModal }) => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const menuIcon = showMenu ? CROSS : HAMBURGER;
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const { userData, fetchUserData } = useContext(UserContext);
+  const { fetchUserData } = useContext(UserContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
@@ -62,16 +62,6 @@ const Header = ({ openAuthModal }) => {
           <span className={styles["brand-name"]}>{BRANDING.brandName}</span>
         </button>
         <div className={styles["nav-bar"]}>
-          {userData && userData.role === "ADMIN" && (
-            <Link
-              key={"admin"}
-              className={styles.nav}
-              to={"/admin"}
-              onClick={(event) => handleNavigation(event, "/admin", navigate)}
-            >
-              Admin
-            </Link>
-          )}
           {NAVBAR_ITEMS.map((item) => (
             <Link
               key={item.name}

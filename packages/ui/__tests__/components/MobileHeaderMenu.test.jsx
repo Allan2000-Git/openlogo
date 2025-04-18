@@ -1,9 +1,9 @@
-import { vi, describe, it, expect } from "vitest";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { render, screen, within, fireEvent } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import MobileHeaderMenu from "../../src/components/header/MobileHeaderMenu";
 import { AuthContext, UserContext } from "../../src/contexts/Contexts";
 import Documentation from "../../src/page/documentation/Documentation";
-import MobileHeaderMenu from "../../src/components/header/MobileHeaderMenu";
 
 const mockCloseMenu = vi.fn();
 
@@ -50,11 +50,6 @@ describe("MobileHeaderMenu Component", () => {
     );
 
     const mobileMenu = screen.getByTestId("mobile-menu");
-    expect(mobileMenu).toBeInTheDocument();
-    const adminNavigation = within(mobileMenu).getByText("Admin");
-    expect(adminNavigation).toBeInTheDocument();
-    fireEvent.click(adminNavigation);
-    expect(window.location.pathname).toBe("/admin");
     const dashboardNavigation = within(mobileMenu).getByText("Dashboard");
     expect(dashboardNavigation).toBeInTheDocument();
     fireEvent.click(dashboardNavigation);

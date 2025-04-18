@@ -1,14 +1,14 @@
-import { useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { HEADER_ITEMS, LOGGEDIN_ITEMS } from "../../utils/Constants";
-import styles from "./MobileHeaderMenu.module.css";
-import { handleNavigation } from "../../utils/Helpers";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext, UserContext } from "../../contexts/Contexts";
+import { HEADER_ITEMS, LOGGEDIN_ITEMS } from "../../utils/Constants";
+import { handleNavigation } from "../../utils/Helpers";
+import styles from "./MobileHeaderMenu.module.css";
 
 const MobileHeaderMenu = ({ closeMenu, isOpen }) => {
   const navigate = useNavigate();
-  const { userData, fetchUserData } = useContext(UserContext);
+  const { fetchUserData } = useContext(UserContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,19 +37,6 @@ const MobileHeaderMenu = ({ closeMenu, isOpen }) => {
   return (
     <div data-testid="mobile-menu" className={styles["mobile-header"]}>
       <div className={styles.navbar}>
-        {userData && userData.role === "ADMIN" && (
-          <Link
-            key={"Admin"}
-            className={styles.nav}
-            to={"/admin"}
-            onClick={(event) => {
-              handleNavigation(event, "/admin", navigate);
-              closeMenu(false);
-            }}
-          >
-            Admin
-          </Link>
-        )}
         {NAVBAR_ITEMS.map((item) => (
           <Link
             key={item.name}
