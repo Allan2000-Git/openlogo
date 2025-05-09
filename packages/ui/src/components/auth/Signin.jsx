@@ -23,6 +23,10 @@ const SignIn = ({ toggleForm, onClose }) => {
     url: isForgotPassword ? `/auth/forgot-password` : `/auth/signin`,
     data: formData,
   });
+  const { makeRequest: makeGuestRequest } = useApi({
+    method: "post",
+    url: `/auth/signin?type=guest`,
+  });
 
   useEffect(() => {
     if (focusedField !== "email") {
@@ -67,6 +71,18 @@ const SignIn = ({ toggleForm, onClose }) => {
 
       setIsSubmit(false);
       setFocusedField(null);
+    }
+  };
+
+  const handleGuestSignIn = async (submitEvent) => {
+    submitEvent.preventDefault();
+    setIsSubmit(true);
+    const success = await makeGuestRequest();
+    if (success) {
+      setIsAuthenticated(true);
+      setIsSubmit(false);
+      onClose();
+      navigate("/dashboard");
     }
   };
 
@@ -127,15 +143,21 @@ const SignIn = ({ toggleForm, onClose }) => {
 
       <hr className={styles.separator} />
 
-      {isForgotPassword ? (
-        <p onClick={toggleForm} className={styles.switch}>
-          Don&apos;t have an account?
-        </p>
-      ) : (
-        <p onClick={toggleForm} className={styles.switch}>
-          {SIGNIN.footerText}
-        </p>
-      )}
+{isForgotPassword ? (
+  <p onClick={toggleForm} className={styles.switch}>
+    Don&apos;t have an account?
+  </p>
+) : (
+  <>
+    <p onClick={handleGuestSignIn} className={styles["guest-sign-in"]}>
+      {SIGNIN.guestAccount}
+    </p>
+    <p onClick={toggleForm} className={styles.switch}>
+      {SIGNIN.footerText}
+    </p>
+  </>
+)}
+
     </>
   );
 };
