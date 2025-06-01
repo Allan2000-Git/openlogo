@@ -1,6 +1,6 @@
 .toast-container {
   position: fixed;
-  z-index: 1000;
+  z-index: 1001;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,6 +41,7 @@
   .toast {
     animation: fadeIn 0.3s ease;
   }
+
   .toast.exiting {
     animation: fadeOut 0.3s ease forwards;
   }
@@ -140,6 +141,7 @@
     transform: translateY(-16px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -151,6 +153,7 @@
     transform: translateY(0);
     opacity: 1;
   }
+
   to {
     transform: translateY(-16px);
     opacity: 0;
@@ -161,6 +164,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -170,6 +174,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
